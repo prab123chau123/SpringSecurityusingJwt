@@ -2,7 +2,6 @@ package com.SpringSecurity.service;
 
 import java.sql.Date;
 import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import com.SpringSecurity.DTO.LoginDTO;
 import com.SpringSecurity.DTO.UserDTO;
 import com.SpringSecurity.Models.Roles;
 import com.SpringSecurity.Models.Users;
-import com.SpringSecurity.config.CustomUserDetailService;
 import com.SpringSecurity.config.JwtService;
 import com.SpringSecurity.respository.RoleRespository;
 import com.SpringSecurity.respository.UserRepository;
@@ -32,8 +30,6 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
-	@Autowired
-	private CustomUserDetailService customUserDetailService;
 	@Autowired
 	private JwtService jwtService;
 
@@ -89,24 +85,22 @@ public class UserService {
 	}
 
 	public ResponseEntity<?> login(LoginDTO loginDTO) {
-	    try {
-	        Authentication authentication = authenticationProvider.authenticate(
-	                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+		try {
+			Authentication authentication = authenticationProvider
+					.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 
-	        if (authentication.isAuthenticated()) {
-	            String token = jwtService.GenerateToken(loginDTO.getEmail());
-	            JwtResponseDTO jwtResponse = JwtResponseDTO.builder()
-	                    .accessToken(token)
-	                    .build();
-	            return ResponseEntity.ok(jwtResponse);
-	        }
-	        
-	        return ResponseEntity.badRequest().body("Invalid Username or Password");
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+			if (authentication.isAuthenticated()) {
+				String token = jwtService.GenerateToken(loginDTO.getEmail());
+				JwtResponseDTO jwtResponse = JwtResponseDTO.builder().accessToken(token).build();
+				return ResponseEntity.ok(jwtResponse);
+			}
+
+			return ResponseEntity.badRequest().body("Invalid Username or Password");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 }

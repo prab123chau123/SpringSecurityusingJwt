@@ -1,7 +1,5 @@
 package com.SpringSecurity.DTO;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

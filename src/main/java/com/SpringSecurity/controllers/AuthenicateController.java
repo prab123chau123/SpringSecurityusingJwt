@@ -45,15 +45,4 @@ public class AuthenicateController {
 		return new ResponseEntity<String>("Something went error", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	/*
-	 * @PreAuthorize("hasAuthority('ADMIN')")
-	 * 
-	 * @GetMapping("/adminlogin") public ResponseEntity<String> adminLogin() {
-	 * return ResponseEntity.ok("Welcome ADMIN"); }
-	 * 
-	 * @PreAuthorize("hasAuthority('USER')")
-	 * 
-	 * @GetMapping("/userlogin") public ResponseEntity<String> userLogin() { return
-	 * ResponseEntity.ok("Welcome User"); }
-	 */
 }
